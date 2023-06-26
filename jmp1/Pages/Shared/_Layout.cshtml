@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <meta name="description" content="@(ViewData["MetaDescription"])" />
+    <meta property="og:title" content="@(ViewData["MetaFacebookTitle"])" />
+    <meta property="og:description" content="@(ViewData["MetaFacebookDescription"])" />
+    <meta property="og:image" content="@(ViewData["MetaFacebookImage"])" />
+    <meta property="og:image:alt" content="@(ViewData["MetaFacebookImageAlt"])" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@("https://" + Context.Request.Host + Context.Request.Path + Context.Request.QueryString)" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@(ViewData["MetaTwitterTitle"])" />
+    <meta name="twitter:description" content="@(ViewData["MetaTwitterDescription"])" />
+    <meta name="twitter:image" content="@(ViewData["MetaTwitterImage"])" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/jmp1.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="~/images/site/logo.jpg" style="max-height:40px;" alt="Logo" />
+                </a>
+                <a class="navbar-brand" href="/">Galactic Developments</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @*
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        *@
+
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                @await Html.PartialAsync("_SelectLanguagePartial")
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="content">
+        @if ((ViewData["Active"] ?? "").ToString() == "Index") {
+            <div class="stage-Index"></div>
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        } else {
+            <div class="container">
+                <img src="/images/site/stage-VenusFreighter-1600x200.jpg" style="width:100%;" class="img-fluid" alt="Venus Freighter" />
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        }
+    </div>
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            &copy; 2000 - 2023 (Wolf) - <a asp-area="" asp-page="/Privacy">Impressum / Legal / Privacy / DSGVO</a>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
